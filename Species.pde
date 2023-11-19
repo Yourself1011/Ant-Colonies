@@ -40,6 +40,9 @@ class Species {
             population.topScore = highScore * colonies.size(); // to undo fitness sharing
             population.topScoreGeneration = generationCount;
         }
+        if (highScore * colonies.size() > population.generationTopScore) {
+            population.generationTopScore = highScore * colonies.size();// to undo fitness sharing
+        }
 
         colonies = colonies.subList(0, surviveIndex);
     }

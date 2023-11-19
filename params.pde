@@ -8,7 +8,7 @@ float foodForBaby = 2.5;
 /**
  * How many ants a colony starts with
  */
-int startingAnts = 12;
+int startingAnts = 24;
 
 /**
  * How many frames a generation lasts for
@@ -28,7 +28,7 @@ boolean wrapAround = false;
 /**
  * Percent of initially connected neurons (excluding bias neuron)
  */
-float initConnectionsChance = 1;
+float initConnectionsChance = 0.5;
 
 // Food generation
 /**

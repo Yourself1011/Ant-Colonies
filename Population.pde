@@ -4,7 +4,7 @@ class Population {
     ArrayList<Species> species = new ArrayList<Species>();
     float totalAvgFitness = 0;
     int population = 0;
-    float topScore;
+    float topScore, generationTopScore;
     int topScoreGeneration, noMoveTurns;
     boolean movement;
 
@@ -63,6 +63,7 @@ class Population {
     }
 
     void endGeneration() {
+        generationTopScore = 0;
         // Give some fitness for ants that have food, but haven't made it back to the hill, and for every ant that exists
         for (Colony colony : colonies) {
             for (Ant ant : colony.ants) {
@@ -103,6 +104,7 @@ class Population {
                 colony.spawn();
             }
         }
+        println("Generation", generationCount, "top score:", generationTopScore);
     }
 
     void createOffspring() {
