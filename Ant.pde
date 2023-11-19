@@ -26,16 +26,14 @@ class Ant extends TileAgent {
                 inputs = new float[] {
                     tile.agent instanceof Ant && ((Ant) tile.agent).colony == this.colony ? 1 : tile.agent instanceof Ant && ((Ant) tile.agent).colony != this.colony ? -1 : 0, // if there is an ant on this tile, and whether it is from our colony, or from a different one
                     tile.agent instanceof Colony && ((Colony) tile.agent) == this.colony ? 1 : tile.agent instanceof Colony && ((Colony) tile.agent) != this.colony ? -1 : 0, // if there is a colony on this tile, and whether it is our colony, or a different one
-                    tile.containsPheromone(colony, 0) ? 1 : 0, // whether this contains pheromone type 1
-                    tile.containsPheromone(colony, 1) ? 1 : 0, // pheromone type 2
+                    tile.containsPheromone(colony, 0) ? 1 : tile.containsPheromone(colony, 1) ? -1 : 0, // whether this contains pheromone type 1 or 2
                     tile.foodLevel // amount of food on this tile
                 };
             } else {
                 inputs = new float[] {
                     tile.agent instanceof Ant && ((Ant) tile.agent).colony == this.colony ? 1 : tile.agent instanceof Ant && ((Ant) tile.agent).colony != this.colony ? -1 : 0, // if there is an ant on this tile, and whether it is from our colony, or from a different one
                     tile.agent instanceof Colony && ((Colony) tile.agent) == this.colony ? 1 : tile.agent instanceof Colony && ((Colony) tile.agent) != this.colony ? -1 : 0, // if there is a colony on this tile, and whether it is our colony, or a different one
-                    tile.containsPheromone(colony, 0) ? 1 : 0, // whether this contains pheromone type 1
-                    tile.containsPheromone(colony, 1) ? 1 : 0, // pheromone type 2
+                    tile.containsPheromone(colony, 0) ? 1 : tile.containsPheromone(colony, 1) ? -1 : 0, // whether this contains pheromone type 1 or 2
                     tile.foodLevel, // amount of food on this tile
                     tile.x == 0 || tile.x == grid.width - 1 || tile.y == 0 || tile.y == grid.height - 1 ? 1 : 0 // whether this tile is on the edge
                 };

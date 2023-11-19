@@ -28,7 +28,7 @@ boolean wrapAround = false;
 /**
  * Percent of initially connected neurons (excluding bias neuron)
  */
-float initConnectionsChance = 0;
+float initConnectionsChance = 1;
 
 // Food generation
 /**

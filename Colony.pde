@@ -13,9 +13,9 @@ class Colony extends TileAgent {
         spawn();
 
         if (wrapAround) {
-            network = new Network(42, 4); // wrap around
+            network = new Network(34, 4); // wrap around
         } else {
-            network = new Network(50, 4); // stop at edges
+            network = new Network(42, 4); // stop at edges
         }
     }
 
