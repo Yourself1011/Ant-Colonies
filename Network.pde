@@ -54,7 +54,7 @@ class Network {
 
                         PVector targetPos = connection.neuronIn.displayPos;
                         stroke(connection.weight < 0 ? 0 : 255, 128);
-                        strokeWeight(abs(connection.weight) * 5);
+                        strokeWeight(abs(connection.weight) * 2);
                         line(neuronX - baseNeuronSize / 2, neuronY, targetPos.x + inNeuronSize / 2, targetPos.y);
                         strokeWeight(1);
                     }

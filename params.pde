@@ -28,7 +28,7 @@ boolean wrapAround = false;
 /**
  * Percent of initially connected neurons (excluding bias neuron)
  */
-float initConnectionsChance = 0.5;
+float initConnectionsChance = 1;
 
 // Food generation
 /**
@@ -51,7 +51,7 @@ int populationSize = 25;
 /**
  * The target number of species
  */
-int numSpecies = 5;
+int numSpecies = 3;
 
 /**
  * Likelihoods of different mutation types
@@ -88,6 +88,6 @@ float dropoffAge = 15;
 float generationPercent = 0.2;
 
 /**
- * The maximum and minimum (negative of this number) that weights can be
+ * The maximum and minimum (negative of this number) that weights can change in 1 mutation
  */
-float weightLimit = 1;
+float weightLimit = 2.5;

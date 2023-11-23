@@ -57,10 +57,12 @@ class Species {
             }
         }
 
+        println(rand);
         return colonies.get(colonies.size() - 1);
     }
 
     void fitnessSharing() {
+        totalFitness = 0;
         for (Colony colony : colonies) {
             colony.fitness /= colonies.size();
             totalFitness += colony.fitness;

@@ -13,8 +13,10 @@ class Neuron {
 
     void mutateWeights() {
         for (Connection connection : connections) {
-            if (random(1) < 0.9) connection.weight = clamp(connection.weight + randomGaussian() / 50, -weightLimit, weightLimit);
-            else connection.weight = random(-weightLimit, weightLimit);
+            if (random(1) < 0.9) connection.weight = connection.weight + truncatedRandomGaussian(-weightLimit, weightLimit);
+            else connection.weight = truncatedRandomGaussian(-weightLimit, weightLimit);
+            // if (random(1) < 0.9) connection.weight = connection.weight + clamp(randomGaussian(), -weightLimit, weightLimit);
+            // else connection.weight = clamp(randomGaussian(), -weightLimit, weightLimit);
         }
     }
 
