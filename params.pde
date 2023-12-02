@@ -14,6 +14,9 @@ int startingAnts = 24;
  * How many frames a generation lasts for
  */
 int generationLength = 3600;
+void updateGenerationLength(int generationCount) {
+    generationLength = (int) ceil(generationCount / 100.0) * 100;
+}
 
 /**
  * How many iterations a pheromone lasts for

@@ -58,6 +58,7 @@ class Population {
         population = 0;
         speciation();
         noiseSeed(millis()); // ensures a different seed every generation
+        updateGenerationLength(generationCount);
 
         setFood();
     }
