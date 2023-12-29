@@ -4,19 +4,38 @@ static class Connection {
     float weight;
     int innovationNumber;
     boolean enabled;
-    static int globalInnovationNumber = 0; // the next innovation number, globally
+    static int globalInnovationNumber =
+        0; // the next innovation number, globally
 
-    Connection(Network network, Neuron neuronIn, Neuron neuronOut, float weight) {
+    Connection(
+        Network network,
+        Neuron neuronIn,
+        Neuron neuronOut,
+        float weight
+    ) {
         this(network, neuronIn, neuronOut, weight, globalInnovationNumber);
         network.connections.add(this);
         globalInnovationNumber++; // so that all innovation numbers are unique
     }
 
-    Connection(Network network, Neuron neuronIn, Neuron neuronOut, float weight, int innovationNumber) {
+    Connection(
+        Network network,
+        Neuron neuronIn,
+        Neuron neuronOut,
+        float weight,
+        int innovationNumber
+    ) {
         this(network, neuronIn, neuronOut, weight, innovationNumber, true);
     }
 
-    Connection(Network network, Neuron neuronIn, Neuron neuronOut, float weight, int innovationNumber, boolean enabled) {
+    Connection(
+        Network network,
+        Neuron neuronIn,
+        Neuron neuronOut,
+        float weight,
+        int innovationNumber,
+        boolean enabled
+    ) {
         this.network = network;
         this.neuronIn = neuronIn;
         this.neuronOut = neuronOut;
@@ -31,7 +50,14 @@ static class Connection {
     }
 
     Connection copy(Network network) {
-        return new Connection(network, neuronIn, neuronOut, weight, innovationNumber, enabled);
+        return new Connection(
+            network,
+            neuronIn,
+            neuronOut,
+            weight,
+            innovationNumber,
+            enabled
+        );
     }
 
     float getInnovationNumber() { // for sorting and max and min

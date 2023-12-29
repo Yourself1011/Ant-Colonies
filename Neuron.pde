@@ -13,16 +13,21 @@ class Neuron {
 
     void mutateWeights() {
         for (Connection connection : connections) {
-            if (random(1) < 0.9) connection.weight = connection.weight + truncatedRandomGaussian(-weightLimit, weightLimit);
-            else connection.weight = truncatedRandomGaussian(-weightLimit, weightLimit);
-            // if (random(1) < 0.9) connection.weight = connection.weight + clamp(randomGaussian(), -weightLimit, weightLimit);
-            // else connection.weight = clamp(randomGaussian(), -weightLimit, weightLimit);
+            if (random(1) < 0.9)
+                connection.weight =
+                    connection.weight +
+                    truncatedRandomGaussian(-weightLimit, weightLimit);
+            else
+                connection.weight =
+                    truncatedRandomGaussian(-weightLimit, weightLimit);
+            // if (random(1) < 0.9) connection.weight = connection.weight +
+            // clamp(randomGaussian(), -weightLimit, weightLimit); else
+            // connection.weight = clamp(randomGaussian(), -weightLimit,
+            // weightLimit);
         }
     }
 
-    float sigmoid(float x) {
-        return 1/(1+exp(-4.9 * x));
-    }
+    float sigmoid(float x) { return 1 / (1 + exp(-4.9 * x)); }
 
     void think() {
         float output = 0;
@@ -42,27 +47,41 @@ class Neuron {
         connections.add(connection);
         network.connections.add(connection);
     }
+
     void connect(Neuron target, float weight, int innovationNumber) {
-        Connection connection = new Connection(network, target, this, weight, innovationNumber);
+        Connection connection =
+            new Connection(network, target, this, weight, innovationNumber);
         connections.add(connection);
         network.connections.add(connection);
     }
-    void connect(Neuron target, float weight, int innovationNumber, boolean enabled) {
-        Connection connection = new Connection(network, target, this, weight, innovationNumber, enabled);
+
+    void connect(
+        Neuron target,
+        float weight,
+        int innovationNumber,
+        boolean enabled
+    ) {
+        Connection connection = new Connection(
+            network,
+            target,
+            this,
+            weight,
+            innovationNumber,
+            enabled
+        );
         connections.add(connection);
         network.connections.add(connection);
     }
 
     boolean connectedTo(Neuron target) {
         for (Connection connection : connections) {
-            if (connection.neuronIn == target) return true;
+            if (connection.neuronIn == target)
+                return true;
         }
         return false;
     }
 
-    void shiftLayer() {
-        layer++;
-    }
+    void shiftLayer() { layer++; }
 
     Neuron copy(Network network) {
         Neuron copy = new Neuron(network, layer, index);
@@ -70,7 +89,8 @@ class Neuron {
         //     copy.connections.add(connection.copy());
         // }
         copy.output = output;
-        if (displayPos != null) copy.displayPos = displayPos.copy();
+        if (displayPos != null)
+            copy.displayPos = displayPos.copy();
         return copy;
     }
 }

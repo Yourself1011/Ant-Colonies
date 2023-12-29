@@ -11,8 +11,9 @@ abstract class TileAgent implements DisplaysUI {
         // y = (this.y + y + grid.height) % grid.height;
         Tile nextTile = grid.get(this.x, this.y).getRelativeTile(x, y);
 
-        if (nextTile.agent != null) return nextTile.agent;
-        
+        if (nextTile.agent != null)
+            return nextTile.agent;
+
         Tile prevTile = grid.get(this.x, this.y);
         if (nextTile != prevTile) {
             prevTile.popColor();
@@ -30,7 +31,8 @@ abstract class TileAgent implements DisplaysUI {
     boolean spawn(int x, int y) {
         Tile tile = grid.get(x, y);
 
-        if (tile.agent != null) return false;
+        if (tile.agent != null)
+            return false;
         this.x = x;
         this.y = y;
         tile.pushColor(col);
@@ -41,5 +43,6 @@ abstract class TileAgent implements DisplaysUI {
 }
 
 interface DisplaysUI {
+
     void drawUI(float x, float y);
 }

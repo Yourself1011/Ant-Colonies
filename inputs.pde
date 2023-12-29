@@ -1,5 +1,8 @@
 void mouseDragged() {
-    cameraPos.sub((mouseX - pmouseX) / cameraZoom, (mouseY - pmouseY) / cameraZoom);
+    cameraPos.sub(
+        (mouseX - pmouseX) / cameraZoom,
+        (mouseY - pmouseY) / cameraZoom
+    );
 }
 
 void mouseWheel(MouseEvent e) {
@@ -23,7 +26,8 @@ void mousePressed() {
 }
 
 void mouseReleased() {
-    if (dist(mouseStartX, mouseStartY, mouseX, mouseY) != 0) return;
+    if (dist(mouseStartX, mouseStartY, mouseX, mouseY) != 0)
+        return;
 
     PVector coords = screenCoordsToGlobal(new PVector(mouseX, mouseY));
     // println(coords);
@@ -57,5 +61,5 @@ void keyPressed() {
         case 'p':
             generationSpeed += 1;
             break;
-    }    
+    }
 }

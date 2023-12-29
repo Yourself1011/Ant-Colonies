@@ -11,7 +11,5 @@ class Pheromone {
         grid.get(x, y).pheromones.add(this);
     }
 
-    void frame() {
-        strength--;
-    }
+    void frame() { strength--; }
 }

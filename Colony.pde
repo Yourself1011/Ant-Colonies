@@ -20,7 +20,8 @@ class Colony extends TileAgent {
     }
 
     Colony(Network network) {
-        // spawn in later, after surviving colonies have been spawned, so as not to take the same spot
+        // spawn in later, after surviving colonies have been spawned, so as not
+        // to take the same spot
 
         col = color(0);
 
@@ -29,14 +30,20 @@ class Colony extends TileAgent {
 
     void spawn() {
         // Keep trying to spawn in a random location if it is not valid
-        while(!spawn((int) random(0, grid.width), (int) random(0, grid.height)));
+        while (!spawn((int) random(0, grid.width), (int) random(0, grid.height))
+        )
+            ;
     }
 
     void chooseColor() {
         // pick a color similar to the species base color
         color specCol = species.baseCol;
 
-        antColor = color(red(specCol) + (int) random(-20, 20), green(specCol) + (int) random(-20, 20), blue(specCol) + (int) random(-20, 20));
+        antColor = color(
+            red(specCol) + (int) random(-20, 20),
+            green(specCol) + (int) random(-20, 20),
+            blue(specCol) + (int) random(-20, 20)
+        );
     }
 
     void reset() {
@@ -61,14 +68,15 @@ class Colony extends TileAgent {
             }
         }
 
-        ants.removeIf(a -> a.dead);
+        ants.removeIf(a->a.dead);
 
         if (foodLevel >= foodForBaby && alive) {
             spawnAnt(new Ant(antColor, network, this));
             foodLevel -= foodForBaby;
         }
         spawnQueuedAnts();
-        if (alive) fitness += 0.0005; // give the network a cookie just for being alive
+        if (alive)
+            fitness += 0.0005; // give the network a cookie just for being alive
     }
 
     void spawnAnt(Ant ant) {
@@ -77,7 +85,8 @@ class Colony extends TileAgent {
     }
 
     void spawnQueuedAnts() {
-        ArrayList<Tile> neighbors = new ArrayList<Tile>(grid.get(x, y).neighbors());
+        ArrayList<Tile> neighbors =
+            new ArrayList<Tile>(grid.get(x, y).neighbors());
         ArrayList<Ant> stillOnCooldown = new ArrayList<Ant>();
 
         while (neighbors.size() > 0 && antQueue.size() > 0) {
@@ -107,11 +116,10 @@ class Colony extends TileAgent {
     }
 
     void drawUI(float x, float y) {
-        String output = "food: " + foodLevel + "\n" +
-            "fitness: " + fitness + "\n" +
-            "population: " + ants.size() + "\n" + 
-            "queen alive: " + alive + "\n" +
-            "species ID: " + species.id + "\n";
+        String output = "food: " + foodLevel + "\n" + "fitness: " + fitness +
+                        "\n" + "population: " + ants.size() + "\n" +
+                        "queen alive: " + alive + "\n" +
+                        "species ID: " + species.id + "\n";
         fill(0);
         textAlign(LEFT, TOP);
         textSize(24);

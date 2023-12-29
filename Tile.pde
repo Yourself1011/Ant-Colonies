@@ -20,7 +20,8 @@ class Tile {
     }
 
     void draw() {
-        if (selectedAgent != null && agent == selectedAgent) selectedTile = this;
+        if (selectedAgent != null && agent == selectedAgent)
+            selectedTile = this;
         stroke(0);
         fill(colorStack.peek());
         square(x * tileSize, y * tileSize, tileSize);
@@ -28,9 +29,18 @@ class Tile {
         if (pheromones.size() > 0) {
             Pheromone pheromone = pheromones.get(pheromones.size() - 1);
             color c = pheromone.colony.antColor;
-            fill(color(red(c), green(c), blue(c), float(pheromone.strength) / pheromoneLength * 255));
+            fill(color(
+                red(c),
+                green(c),
+                blue(c),
+                float(pheromone.strength) / pheromoneLength * 255
+            ));
             noStroke();
-            square(x * tileSize + tileSize / 4, y * tileSize + tileSize / 4, tileSize / 2);
+            square(
+                x * tileSize + tileSize / 4,
+                y * tileSize + tileSize / 4,
+                tileSize / 2
+            );
         }
     }
 
@@ -39,7 +49,7 @@ class Tile {
             pheromone.frame();
         }
 
-        pheromones.removeIf(p -> p.strength <= 0);
+        pheromones.removeIf(p->p.strength <= 0);
     }
 
     void drawOutline(color stroke) {
@@ -48,9 +58,7 @@ class Tile {
         square(x * tileSize, y * tileSize, tileSize);
     }
 
-    void pushColor(color col) {
-        colorStack.push(col);
-    }
+    void pushColor(color col) { colorStack.push(col); }
 
     color popColor() {
         if (colorStack.size() == 1) {
@@ -86,15 +94,22 @@ class Tile {
 
     Tile getRelativeTile(int x, int y) {
         if (wrapAround) {
-            return grid.get((this.x + x + grid.width) % grid.width, (this.y + y + grid.height) % grid.height); // Wrap around
+            return grid.get(
+                (this.x + x + grid.width) % grid.width,
+                (this.y + y + grid.height) % grid.height
+            ); // Wrap around
         } else {
-            return grid.get(clamp(this.x + x, 0, grid.width - 1), clamp(this.y + y, 0, grid.height - 1)); // stop at the edges
+            return grid.get(
+                clamp(this.x + x, 0, grid.width - 1),
+                clamp(this.y + y, 0, grid.height - 1)
+            ); // stop at the edges
         }
     }
 
     boolean containsPheromone(Colony colony, int type) {
         for (Pheromone pheromone : pheromones) {
-            if (pheromone.colony == colony && pheromone.type == type) return true;
+            if (pheromone.colony == colony && pheromone.type == type)
+                return true;
         }
         return false;
     }

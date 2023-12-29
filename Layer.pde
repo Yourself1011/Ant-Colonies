@@ -27,13 +27,9 @@ class Layer implements Iterable<Neuron> {
         }
     }
 
-    Neuron getRandom() {
-        return neurons.get(floor(random(neurons.size())));
-    }
+    Neuron getRandom() { return neurons.get(floor(random(neurons.size()))); }
 
-    Iterator<Neuron> iterator() {
-        return neurons.iterator();
-    }
+    Iterator<Neuron> iterator() { return neurons.iterator(); }
 
     Neuron add(Neuron neuron) {
         neurons.add(neuron);
@@ -42,7 +38,7 @@ class Layer implements Iterable<Neuron> {
 
     void shiftLayer() {
         layer++;
-        neurons.forEach(n -> n.shiftLayer());
+        neurons.forEach(n->n.shiftLayer());
     }
 
     Layer copy(Network network) {

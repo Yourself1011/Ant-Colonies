@@ -14,13 +14,9 @@ class Grid implements Iterable<Tile[]> {
         }
     }
 
-    Iterator<Tile[]> iterator() {
-        return Arrays.stream(this.tiles).iterator();
-    }
+    Iterator<Tile[]> iterator() { return Arrays.stream(this.tiles).iterator(); }
 
-    Tile get(int x, int y) {
-        return this.tiles[x][y];
-    }
+    Tile get(int x, int y) { return this.tiles[x][y]; }
 
     void draw() {
         for (Tile[] column : this) {
@@ -28,7 +24,8 @@ class Grid implements Iterable<Tile[]> {
                 tile.draw();
             }
         }
-        if (selectedAgent != null) selectedTile.drawOutline(color(255, 255, 0));
+        if (selectedAgent != null)
+            selectedTile.drawOutline(color(255, 255, 0));
     }
 
     void reset() {
