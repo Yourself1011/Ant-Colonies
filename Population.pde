@@ -2,14 +2,13 @@ class Population {
     ArrayList<Colony> colonies = new ArrayList<Colony>();
     ArrayList<Colony> nextGenColonies = new ArrayList<Colony>();
     ArrayList<Species> species = new ArrayList<Species>();
-    float totalAvgFitness = 0;
+    float totalAvgFitness = 0, avgFitness = 0;
     int population = 0;
     float topScore, generationTopScore;
     int topScoreGeneration, noMoveTurns;
     boolean movement;
 
-    Population() {
-    }
+    Population() {}
 
     void frame() {
         generationElapsed++;
@@ -30,7 +29,8 @@ class Population {
         }
         movement = false;
 
-        if (generationElapsed >= generationLength || population == 0 || (noMoveTurns > 3 && generationElapsed > 3) ) {
+        if (generationElapsed >= generationLength || population == 0 ||
+            (noMoveTurns > 3 && generationElapsed > 3)) {
             generationElapsed = 0;
             skipGeneration = false;
             generationCount++;
@@ -51,7 +51,6 @@ class Population {
         }
 
         beginGeneration();
-
     }
 
     void beginGeneration() {
@@ -65,7 +64,8 @@ class Population {
 
     void endGeneration() {
         generationTopScore = 0;
-        // Give some fitness for ants that have food, but haven't made it back to the hill, and for every ant that exists
+        // Give some fitness for ants that have food, but haven't made it back
+        // to the hill, and for every ant that exists
         for (Colony colony : colonies) {
             for (Ant ant : colony.ants) {
                 colony.fitness += ant.foodLevel * 0.01;
@@ -80,12 +80,13 @@ class Population {
             specie.fitnessSharing();
             totalAvgFitness += specie.totalFitness;
         }
+        avgFitness = totalAvgFitness / species.size();
 
         createOffspring();
 
         for (int i = 0; i < species.size(); i++) {
             Species specie = species.get(i);
-            
+
             specie.performNaturalSelection();
             nextGenColonies.addAll(0, specie.colonies);
 
@@ -104,34 +105,70 @@ class Population {
             if (!colony.spawned) {
                 colony.spawn();
             }
+            colony.fitness = 0;
         }
-        println("Generation", generationCount, "top score:", generationTopScore);
+        println(
+            "Generation",
+            generationCount,
+            "\ttop score:",
+            generationTopScore,
+            "\taverage score:",
+            avgFitness
+        );
     }
 
     void createOffspring() {
         for (Species specie : species) {
-            for (int i = 0; i < ceil((specie.totalFitness / totalAvgFitness) * populationSize - specie.colonies.size() * generationPercent); i++) {
-                Species chosenSpecies = specie; 
+
+            // float debug = 0;
+            // for (Colony colony : specie.colonies) {
+            //     debug += colony.fitness;
+            // }
+            // println("\nfor " + specie.id, debug, specie.totalFitness);
+
+            for (int i = 0; i < ceil(
+                                    (specie.totalFitness / totalAvgFitness) *
+                                        populationSize -
+                                    specie.colonies.size() * generationPercent
+                                );
+                 i++) {
+                Species chosenSpecies = specie;
                 if (specie.stagnantGenerations > dropoffAge) {
                     chosenSpecies = weightedRandomSpecies();
+                    // println("instead chose " + chosenSpecies.id);
                 }
 
                 if (random(1) < 0.25) {
                     // Just mutate a random colony
-                    Network network = chosenSpecies.weightedRandomColony().network.copy();
+                    Network network =
+                        chosenSpecies.weightedRandomColony().network.copy();
                     nextGenColonies.add(new Colony(network.mutate()));
                 } else if (random(1) < 0.001) {
-                    // Mutate between species
 
-                    Colony colony1 = weightedRandomColony(), colony2 = weightedRandomColony();
-                    nextGenColonies.add(new Colony(colony1.network.createOffspring(colony2.network, colony1.fitness, colony2.fitness).mutate()));
+                    // Mutate between species
+                    Colony colony1 = weightedRandomColony(),
+                           colony2 = weightedRandomColony();
+                    nextGenColonies.add(new Colony(colony1.network
+                                                       .createOffspring(
+                                                           colony2.network,
+                                                           colony1.fitness,
+                                                           colony2.fitness
+                                                       )
+                                                       .mutate()));
                 } else {
                     // Mutate within species
 
-                    Colony colony1 = chosenSpecies.weightedRandomColony(), colony2 = chosenSpecies.weightedRandomColony();
-                    nextGenColonies.add(new Colony(colony1.network.createOffspring(colony2.network, colony1.fitness, colony2.fitness).mutate()));
+                    Colony colony1 = chosenSpecies.weightedRandomColony(),
+                           colony2 = chosenSpecies.weightedRandomColony();
+                    nextGenColonies.add(new Colony(colony1.network
+                                                       .createOffspring(
+                                                           colony2.network,
+                                                           colony1.fitness,
+                                                           colony2.fitness
+                                                       )
+                                                       .mutate()));
                 }
-            } 
+            }
         }
     }
 
@@ -153,6 +190,7 @@ class Population {
 
         return species.get(species.size() - 1);
     }
+
     Colony weightedRandomColony() {
         float rand = random(totalAvgFitness);
         for (int i = 0; i < colonies.size(); i++) {
@@ -173,18 +211,23 @@ class Population {
     }
 
     void setFood() {
+        updateFoodCutoff(generationCount);
         for (int x = 0; x < grid.width; x++) {
             for (int y = 0; y < grid.height; y++) {
                 Tile tile = grid.get(x, y);
                 if (tile.agent == null) { // no colony or ant on this tile
-                    float noiseValue = noise(x * noiseCoefficient, y * noiseCoefficient);
+                    float noiseValue =
+                        noise(x * noiseCoefficient, y * noiseCoefficient);
                     for (Tile neighbor : tile.neighbors()) {
-                        if (neighbor.agent instanceof Colony) noiseValue = 1; // start each colony with food surrounding it
+                        if (neighbor.agent instanceof Colony)
+                            noiseValue =
+                                1; // start each colony with food surrounding it
                     }
 
-                    // tile.pushFood(max(0, noiseValue - foodConcentration) / (1 - foodConcentration));
+                    // tile.pushFood(max(0, noiseValue - foodConcentration) / (1
+                    // - foodConcentration));
                     tile.pushFood(noiseValue < foodCutoff ? 0 : noiseValue);
-                } 
+                }
             }
         }
     }
@@ -196,6 +239,7 @@ class Population {
                     if (specie.compare(colony)) {
                         colony.species = specie;
                         specie.colonies.add(colony);
+                        break;
                     }
                 }
                 if (colony.species == null) {

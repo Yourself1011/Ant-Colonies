@@ -1,4 +1,5 @@
 int globalSpeciesId = 0;
+
 class Species {
     Colony bestColony;
     float bestScore, totalFitness;
@@ -11,20 +12,27 @@ class Species {
         colonies.add(baseColony);
         baseColony.species = this;
         baseCol = (int) random(16777216);
-        
+
         id = globalSpeciesId;
         globalSpeciesId++;
     }
 
     boolean compare(Colony colony) {
-        NetworkDifference difference = bestColony.network.compare(colony.network);
-        return difference.disjoint.size() * disjointCoefficient + difference.excess.size() * excessCoefficient + difference.avgWeightDiff * weightDifferenceCoefficient < compatibilityThreshold;
+        NetworkDifference difference =
+            bestColony.network.compare(colony.network);
+        return difference.disjoint.size() * disjointCoefficient +
+                   difference.excess.size() * excessCoefficient +
+                   difference.avgWeightDiff * weightDifferenceCoefficient <
+               compatibilityThreshold;
     }
 
     void performNaturalSelection() {
         int surviveIndex = floor(colonies.size() * generationPercent);
 
-        Collections.sort(colonies, Comparator.comparing((Colony c) -> c.fitness).reversed());
+        Collections.sort(
+            colonies,
+            Comparator.comparing((Colony c)->c.fitness).reversed()
+        );
 
         float highScore = colonies.get(0).fitness;
 
@@ -37,11 +45,13 @@ class Species {
         }
 
         if (highScore * colonies.size() > population.topScore) {
-            population.topScore = highScore * colonies.size(); // to undo fitness sharing
+            population.topScore =
+                highScore * colonies.size(); // to undo fitness sharing
             population.topScoreGeneration = generationCount;
         }
         if (highScore * colonies.size() > population.generationTopScore) {
-            population.generationTopScore = highScore * colonies.size();// to undo fitness sharing
+            population.generationTopScore =
+                highScore * colonies.size(); // to undo fitness sharing
         }
 
         colonies = colonies.subList(0, surviveIndex);
@@ -49,15 +59,17 @@ class Species {
 
     Colony weightedRandomColony() {
         float rand = random(totalFitness);
+        // float debug = 0;
         for (Colony colony : colonies) {
             rand -= colony.fitness;
+            // debug += colony.fitness;
 
             if (rand <= 0) {
                 return colony;
             }
         }
 
-        println(rand);
+        // println(id, rand, debug, totalFitness, colonies.size());
         return colonies.get(colonies.size() - 1);
     }
 
@@ -66,6 +78,10 @@ class Species {
         for (Colony colony : colonies) {
             colony.fitness /= colonies.size();
             totalFitness += colony.fitness;
+            // if (colony.species != this)
+            //     println("AAAAAAAA");
         }
+
+        // println(id, totalFitness, colonies.size());
     }
 }

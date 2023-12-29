@@ -21,11 +21,13 @@ TileAgent selectedAgent;
 Network selectedNetwork;
 Tile selectedTile;
 float speed = 5;
-int iterationFrames = 0, generationIteration = 0, generationElapsed = 0, generationCount = 0, generationSpeed = 1;
+int iterationFrames = 0, generationIteration = 0, generationElapsed = 0, generationCount = 0, generationSpeed = 1000;
 boolean skipGeneration = false;
 
 void setup() {
-    fullScreen();
+    // fullScreen();
+    size(512, 512);
+    windowResizable(true);
     cameraPos = new PVector(0, 0);
     population.firstGeneration();
 }
