@@ -10,6 +10,8 @@ class Ant extends TileAgent {
         this.network = network;
         this.colony = colony;
         population.population++;
+        // cooldown = (int) abs(randomGaussian()) * 4;
+        cooldown = (int) random(startingAnts);
     }
 
     void think() {
@@ -104,10 +106,8 @@ class Ant extends TileAgent {
         else if (network.outputLayer.get(1).output > 0.66)
             moveX--; // move right
 
-        if (network.outputLayer.get(2).output >= 0.5)
-            dropPheromone(0);
-        if (network.outputLayer.get(3).output >= 0.5)
-            dropPheromone(1);
+        if (network.outputLayer.get(2).output >= 0.5) dropPheromone(0);
+        if (network.outputLayer.get(3).output >= 0.5) dropPheromone(1);
 
         if (selectedAgent == this) {
             selectedNetwork = network.copy(); // For displaying purposes

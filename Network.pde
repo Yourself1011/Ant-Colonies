@@ -14,11 +14,10 @@ class Network {
         for (Neuron outputNode : outputLayer) {
             for (Neuron inputNode : inputLayer) {
                 if (random(1) < initConnectionsChance ||
-                    inputNode.layer == 0 &&
-                        inputNode.index ==
-                            0) { // connect the bias node to every output node,
-                                 // otherwise random chance of connection being
-                                 // made
+                    inputNode.layer == 0 && inputNode.index == 0) {
+                    // connect the bias node to every output node,
+                    // otherwise random chance of connection being
+                    // made
                     outputNode.connect(
                         inputNode,
                         random(-weightLimit, weightLimit)
@@ -29,7 +28,8 @@ class Network {
         connectRandom(); // ensure at least one connection
     }
 
-    Network() {}
+    Network() {
+    }
 
     void draw(float x, float y, float width, float height) {
         // displays neural network

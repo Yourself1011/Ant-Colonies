@@ -5,7 +5,7 @@ class Population {
     float totalAvgFitness = 0, avgFitness = 0;
     int population = 0;
     float topScore, generationTopScore;
-    int topScoreGeneration, noMoveTurns;
+    int topScoreGeneration, noMoveTurns, lastSpeciesCount;
     boolean movement;
 
     Population() {}
@@ -71,6 +71,8 @@ class Population {
                 colony.fitness += ant.foodLevel * 0.01;
                 colony.fitness += 0.001;
             }
+            colony.fitness =
+                pow(colony.fitness, 2); // square it to be more greedy
         }
 
         grid.reset();
@@ -81,6 +83,7 @@ class Population {
             totalAvgFitness += specie.totalFitness;
         }
         avgFitness = totalAvgFitness / species.size();
+        lastSpeciesCount = species.size();
 
         createOffspring();
 
@@ -107,13 +110,17 @@ class Population {
             }
             colony.fitness = 0;
         }
+
         println(
             "Generation",
             generationCount,
             "\ttop score:",
-            generationTopScore,
+            nf(generationTopScore, 0, 8),
+            "(" + nf(pow(generationTopScore, 0.5), 0, 8) + ")",
             "\taverage score:",
-            avgFitness
+            nf(avgFitness, 0, 8),
+            "\tspecies count:",
+            lastSpeciesCount
         );
     }
 
@@ -219,9 +226,8 @@ class Population {
                     float noiseValue =
                         noise(x * noiseCoefficient, y * noiseCoefficient);
                     for (Tile neighbor : tile.neighbors()) {
-                        if (neighbor.agent instanceof Colony)
-                            noiseValue =
-                                1; // start each colony with food surrounding it
+                        if (neighbor.agent instanceof Colony) noiseValue = 0.5;
+                        // start each colony with food surrounding it
                     }
 
                     // tile.pushFood(max(0, noiseValue - foodConcentration) / (1

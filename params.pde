@@ -8,7 +8,7 @@ float foodForBaby = 2.5;
 /**
  * How many ants a colony starts with
  */
-int startingAnts = 24;
+int startingAnts = 12;
 
 /**
  * How many frames a generation lasts for
@@ -44,7 +44,7 @@ float initConnectionsChance = 0;
 float foodCutoff = 0;
 
 void updateFoodCutoff(int generationCount) {
-    foodCutoff = 1 - 1 / (1 / 5000.0 * generationCount + 1);
+    foodCutoff = 1 - 1 / (1 / 10000.0 * generationCount + 1);
 };
 
 /**
@@ -56,12 +56,12 @@ float noiseCoefficient = 0.05;
 /**
  * Number of colonies every generation
  */
-int populationSize = 25;
+int populationSize = 50;
 
 /**
  * The target number of species
  */
-int numSpecies = 3;
+int numSpecies = 5;
 
 /**
  * Likelihoods of different mutation types

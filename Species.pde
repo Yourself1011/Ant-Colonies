@@ -70,6 +70,7 @@ class Species {
         }
 
         // println(id, rand, debug, totalFitness, colonies.size());
+        println(rand);
         return colonies.get(colonies.size() - 1);
     }
 

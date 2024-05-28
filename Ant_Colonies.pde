@@ -15,7 +15,7 @@ import java.util.*;
 PVector cameraPos;
 float cameraZoom = 1;
 float tileSize = 10;
-Grid grid = new Grid(200, 250);
+Grid grid = new Grid(300, 375);
 Population population = new Population();
 TileAgent selectedAgent;
 Network selectedNetwork;
